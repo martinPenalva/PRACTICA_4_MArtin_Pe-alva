@@ -1,0 +1,11 @@
+cpp_client/build/
+cpp_client/build_vcpkg/
+py_server/.venv/
+py_server/__pycache__/
+py_server/images/
+*.png
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.log

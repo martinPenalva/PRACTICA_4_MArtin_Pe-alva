@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica 4 - Procesamiento e Interpolación de Imágenes Táctiles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      margin: 40px;
+      background-color: #f5f5f5;
+      color: #222;
+    }
+
+    h1, h2, h3 {
+      color: #003366;
+    }
+
+    code, pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      display: block;
+      overflow-x: auto;
+    }
+
+    .section {
+      background: white;
+      padding: 25px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #003366;
+      color: white;
+    }
+
+    ul {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Práctica 4</h1>
+  <h2>Procesamiento e Interpolación de Imágenes Táctiles para un Gripper Robótico utilizando C++ y Python</h2>
+
+  <p><strong>Grado:</strong> Tecnologías Digitales para la Empresa</p>
+  <p><strong>Asignatura:</strong> Sistemas Operativos</p>
+  <p><strong>Profesor:</strong> Dr. Jaime Andrés Rincón Arango</p>
+  <p><strong>Curso:</strong> 2025-2026</p>
+
+  <div class="section">
+    <h2>1. Contextualización</h2>
+
+    <p>
+      En los sistemas robóticos modernos, los sensores táctiles permiten que los robots perciban propiedades físicas del entorno, como presión, textura, forma y distribución de contacto.
+    </p>
+
+    <p>
+      Los sensores táctiles matriciales funcionan de manera similar a una imagen en escala de grises, donde cada celda representa el nivel de presión detectado en una posición específica.
+    </p>
+
+    <p>
+      En esta práctica se trabajará con un sensor táctil integrado en un gripper robótico. Los datos capturados han sido almacenados en formato JSON y contienen 50 capturas táctiles diferentes.
+    </p>
+
+    <p>
+      A partir de estas matrices, los estudiantes deberán aplicar técnicas de interpolación para aumentar la resolución hasta <strong>128 × 128</strong>.
+    </p>
+
+    <h3>Conceptos fundamentales</h3>
+    <ul>
+      <li>Procesamiento de matrices</li>
+      <li>Interpolación numérica</li>
+      <li>Comunicación cliente-servidor</li>
+      <li>Procesamiento de señales táctiles</li>
+      <li>Visualización científica</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>2. Objetivos</h2>
+
+    <h3>Objetivo general</h3>
+
+    <p>
+      Desarrollar un sistema distribuido en C++ y Python capaz de procesar información táctil proveniente de un sensor robótico, aumentando su resolución mediante interpolación y generando representaciones visuales de la presión detectada.
+    </p>
+
+    <h3>Objetivos específicos</h3>
+
+    <ul>
+      <li>Leer y procesar archivos JSON en C++</li>
+      <li>Manipular matrices bidimensionales</li>
+      <li>Implementar interpolación bilineal</li>
+      <li>Desarrollar un cliente HTTP en C++</li>
+      <li>Implementar un servidor HTTP en Python</li>
+      <li>Generar imágenes utilizando Matplotlib</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>3. Descripción de la práctica</h2>
+
+    <p>
+      Se dispone de un conjunto de datos táctiles almacenados en un archivo JSON.
+    </p>
+
+    <p><strong>Tamaño de cada matriz:</strong> 16 × 16</p>
+    <p><strong>Total de valores por captura:</strong> 256</p>
+
+    <h3>Los estudiantes deberán:</h3>
+
+    <ol>
+      <li>Leer las 50 capturas desde el archivo JSON</li>
+      <li>Validar que todas las matrices tengan dimensiones 16 × 16</li>
+      <li>Convertir cada matriz a 128 × 128</li>
+      <li>Aplicar interpolación bilineal</li>
+      <li>Enviar matrices al servidor Python</li>
+      <li>Generar imágenes táctiles</li>
+      <li>Guardar las imágenes generadas</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>4. Estructura del archivo JSON</h2>
+
+<pre><code>{
+  "captures": [
+    {
+      "id": 0,
+      "matrix": [
+        [0, 12, 14, 18],
+        [0, 10, 15, 22],
+        [0, 8, 18, 28]
+      ]
+    }
+  ]
+}</code></pre>
+
+    <p>Cada captura contiene:</p>
+
+    <ul>
+      <li><strong>id:</strong> identificador de la captura</li>
+      <li><strong>matrix:</strong> matriz táctil 16 × 16</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>5. Requisitos técnicos</h2>
+
+    <h3>Parte C++</h3>
+
+    <ul>
+      <li>Leer el JSON</li>
+      <li>Procesar matrices</li>
+      <li>Aplicar interpolación bilineal</li>
+      <li>Enviar datos mediante HTTP POST</li>
+    </ul>
+
+    <p><strong>Librerías recomendadas:</strong></p>
+
+    <ul>
+      <li>nlohmann/json</li>
+      <li>libcurl</li>
+    </ul>
+
+    <h3>Parte Python</h3>
+
+    <ul>
+      <li>Servidor Flask</li>
+      <li>Reconstrucción de matrices</li>
+      <li>Generación de imágenes</li>
+    </ul>
+
+    <p><strong>Librerías recomendadas:</strong></p>
+
+    <ul>
+      <li>Flask</li>
+      <li>NumPy</li>
+      <li>Matplotlib</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>6. Interpolación requerida</h2>
+
+    <p><strong>Escalado:</strong> 16 × 16 → 128 × 128</p>
+    <p><strong>Factor de escala:</strong> 8x</p>
+
+    <p>
+      La interpolación bilineal deberá implementarse manualmente.
+      No está permitido utilizar OpenCV o SciPy para realizar directamente el escalado.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>7. Comunicación cliente-servidor</h2>
+
+    <p>El cliente en C++ deberá enviar matrices utilizando HTTP POST.</p>
+
+<pre><code>{
+  "capture_id": 0,
+  "width": 128,
+  "height": 128,
+  "data": [[...]]
+}</code></pre>
+
+  </div>
+
+  <div class="section">
+    <h2>8. Visualización en Python</h2>
+
+<pre><code>plt.imshow(matrix, cmap="inferno")
+plt.colorbar(label="Presion")
+plt.title("Mapa tactil")</code></pre>
+
+    <p>Las imágenes deberán guardarse automáticamente:</p>
+
+<pre><code>capture_0.png
+capture_1.png
+...</code></pre>
+
+  </div>
+
+  <div class="section">
+    <h2>9. Entregables</h2>
+
+    <h3>1. Código fuente en C++</h3>
+
+    <ul>
+      <li>Lectura del archivo JSON</li>
+      <li>Validación de matrices</li>
+      <li>Interpolación bilineal manual</li>
+      <li>Cliente HTTP</li>
+      <li>Uso obligatorio de funciones</li>
+      <li>Archivos .h y .cpp</li>
+      <li>Archivo principal main.cpp</li>
+    </ul>
+
+    <h3>2. Código fuente en Python</h3>
+
+    <ul>
+      <li>Servidor Flask</li>
+      <li>Generación de imágenes</li>
+    </ul>
+
+    <h3>3. Informe técnico</h3>
+
+    <p>Máximo 5 páginas.</p>
+
+    <ul>
+      <li>Explicación del sistema</li>
+      <li>Explicación de la interpolación</li>
+      <li>Arquitectura cliente-servidor</li>
+      <li>Resultados</li>
+      <li>Conclusiones</li>
+    </ul>
+
+    <h3>4. Evidencias</h3>
+
+    <ul>
+      <li>Capturas de pantalla</li>
+      <li>Imágenes generadas</li>
+      <li>Ejecución del sistema</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>10. Resultados esperados</h2>
+
+    <ul>
+      <li>Procesar señales táctiles robóticas</li>
+      <li>Escalar matrices mediante interpolación</li>
+      <li>Implementar comunicación entre C++ y Python</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>11. Rúbrica de evaluación</h2>
+
+    <table>
+      <tr>
+        <th>Criterio</th>
+        <th>Nota</th>
+        <th>Descripción</th>
+      </tr>
+
+      <tr>
+        <td>Lectura correcta del JSON</td>
+        <td>1.0</td>
+        <td>Carga correcta de las 50 capturas</td>
+      </tr>
+
+      <tr>
+        <td>Validación de matrices</td>
+        <td>1.0</td>
+        <td>Verificación correcta de dimensiones</td>
+      </tr>
+
+      <tr>
+        <td>Interpolación bilineal</td>
+        <td>2.5</td>
+        <td>Generación correcta de matrices 128 × 128</td>
+      </tr>
+
+      <tr>
+        <td>Comunicación HTTP</td>
+        <td>1.5</td>
+        <td>Envío correcto al servidor Python</td>
+      </tr>
+
+      <tr>
+        <td>Generación de imágenes</td>
+        <td>1.5</td>
+        <td>Creación correcta de mapas táctiles</td>
+      </tr>
+
+      <tr>
+        <td>Modularidad</td>
+        <td>1.5</td>
+        <td>Uso correcto de funciones y archivos</td>
+      </tr>
+
+      <tr>
+        <td>Informe técnico</td>
+        <td>1.0</td>
+        <td>Claridad técnica y análisis</td>
+      </tr>
+
+      <tr>
+        <th>Total</th>
+        <th>10.0</th>
+        <th></th>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>12. Recomendaciones</h2>
+
+    <ul>
+      <li>Implementar primero la lectura del JSON</li>
+      <li>Validar la interpolación antes de integrar el servidor</li>
+      <li>Probar HTTP con matrices pequeñas</li>
+      <li>Verificar visualmente las imágenes</li>
+      <li>Usar mapas de color adecuados</li>
+    </ul>
+
+    <p><strong>Fecha de entrega:</strong> 2 Junio 2026</p>
+  </div>
+
+  <div class="section">
+    <h2>13. Material de apoyo recomendado</h2>
+
+    <h3>C++</h3>
+
+    <ul>
+      <li>JSON for Modern C++</li>
+      <li>Documentación de libcurl</li>
+    </ul>
+
+    <h3>Python</h3>
+
+    <ul>
+      <li>Flask</li>
+      <li>Matplotlib</li>
+      <li>NumPy</li>
+    </ul>
+  </div>
+
+</body>
+</html>
