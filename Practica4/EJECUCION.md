@@ -12,7 +12,7 @@ Este método usa **vcpkg** para instalar `libcurl` y **winget** para instalar `c
 ### 1) Lanzar el servidor (Python)
 
 ```powershell
-cd "c:\Users\Martin\Documents\martin\2026\UBU\Sistemas operativos\PRACTICAS\Practica4\py_server"
+cd "c:\Users\Martin\Documents\martin\2026\UBU\Sistemas operativos\PRACTICAS\PRACTICA_4\Practica4\py_server"
 python -m venv .venv
 .\.venv\Scripts\activate
 pip install -r requirements.txt
@@ -26,7 +26,7 @@ Déjalo corriendo (escucha en `http://127.0.0.1:5000`).
 En otra terminal:
 
 ```powershell
-cd "c:\Users\Martin\Documents\martin\2026\UBU\Sistemas operativos\PRACTICAS\Practica4"
+cd "c:\Users\Martin\Documents\martin\2026\UBU\Sistemas operativos\PRACTICAS\PRACTICA_4\Practica4"
 
 # instalar CMake (una sola vez). Luego cierra y abre la terminal.
 winget install --id Kitware.CMake -e
